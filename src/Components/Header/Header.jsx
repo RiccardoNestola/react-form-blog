@@ -17,11 +17,11 @@ const Header = ({ onOpenModal }) => {
                         <a href='#' className="mr-5 hover:text-gray-900">Contatti</a>
                     </nav>
 
-                    <a href='#' className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" onClick={onOpenModal}>Crea Post
+                    <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" onClick={onOpenModal}>Crea Post
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mx-1 w-5 h-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
-                    </a>
+                    </button>
 
                 </div>
             </header>
