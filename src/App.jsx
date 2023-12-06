@@ -12,6 +12,8 @@ function App() {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [posts, setPosts] = useState(oldPosts);
+  const [postToEdit, setPostToEdit] = useState(null);
+
 
   const addPost = (newPost) => {
     const uniqueId = crypto.randomUUID();
@@ -27,6 +29,23 @@ function App() {
   };
 
 
+  const openEditModal = (post) => {
+    /*  console.log(post); */
+    setPostToEdit(post);
+    setModalOpen(true);
+  };
+
+  const editPost = (postId, updatedData) => {
+    const updatedPosts = posts.map(post => {
+      if (post.id === postId) {
+        return { ...post, ...updatedData };
+      }
+      return post;
+    });
+    setPosts(updatedPosts);
+  };
+
+
   return (
     <>
       <Header onOpenModal={() => setModalOpen(true)} />
@@ -34,9 +53,10 @@ function App() {
       <main>
         <Carousel images={images} />
 
-        <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} onAddPost={addPost} />
+        <Modal isOpen={isModalOpen} onClose={() => { setModalOpen(false); setPostToEdit(null); }} onAddPost={addPost} onSave={editPost} existingPost={postToEdit} />
 
-        <CardList posts={posts} onDeletePost={deletePost} />
+
+        <CardList posts={posts} onDeletePost={deletePost} onEditPost={openEditModal} />
       </main>
 
       <Footer />

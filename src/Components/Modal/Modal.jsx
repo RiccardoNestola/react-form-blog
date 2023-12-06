@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Modal = ({ isOpen, onClose, onAddPost }) => {
+const Modal = ({ isOpen, onClose, onAddPost, onSave, existingPost }) => {
 
     const [newPost, setNewPost] = useState({
         title: '',
@@ -22,15 +22,48 @@ const Modal = ({ isOpen, onClose, onAddPost }) => {
 
     const Submit = (e) => {
         e.preventDefault();
-
         if (!newPost.title || !newPost.image || !newPost.content || !newPost.tags) {
-            alert('Riempi tutti i campi!');
+            alert('Compila tutti i campi');
             return;
         }
         const tagsArray = newPost.tags.split(',').map(tag => tag.trim());
-        onAddPost({ ...newPost, tags: tagsArray });
+        const postData = { ...newPost, tags: tagsArray };
+
+        if (existingPost) {
+            onSave(existingPost.id, postData);
+        } else {
+            onAddPost(postData);
+        }
+
         onClose();
     };
+
+
+    useEffect(() => {
+        /* console.log(existingPost); */
+        if (existingPost) {
+            setNewPost({
+                title: existingPost.title || '',
+                image: existingPost.image || '',
+                content: existingPost.content || '',
+                tags: Array.isArray(existingPost.tags) ? existingPost.tags.join(', ') : '',
+                published: existingPost.hasOwnProperty('published') ? existingPost.published : true,
+            });
+        } else {
+            /*  console.log(existingPost); */
+            setNewPost({
+                title: '',
+                image: '',
+                content: '',
+                tags: '',
+                published: true,
+            });
+        }
+    }, [existingPost]);
+
+
+
+
 
     if (!isOpen) return null;
 
@@ -71,7 +104,7 @@ const Modal = ({ isOpen, onClose, onAddPost }) => {
 
                     <div>
                         <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                            Aggiungi Post
+                            {existingPost ? 'Salva le modifiche' : 'Aggiungi Post'}
                         </button>
                     </div>
                 </form>

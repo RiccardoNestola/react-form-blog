@@ -7,7 +7,9 @@ const TagColor = {
     "php": "bg-violet-500"
 };
 
-const CardInfo = ({ id, image, tags, title, content, onDelete }) => {
+const CardInfo = ({ post, onDelete, onEdit }) => {
+
+    const { id, image, tags, title, content } = post;
 
 
     return (
@@ -26,6 +28,9 @@ const CardInfo = ({ id, image, tags, title, content, onDelete }) => {
                     <div className="flex items-center flex-wrap ">
                         <a href="/learn-more" className="text-gray-500 inline-flex items-center md:mb-2 lg:mb-0">Scopri di più</a>
                     </div>
+                    <button onClick={() => onEdit(post)}>
+                        Modifica
+                    </button>
                     <button onClick={() => onDelete(id)} className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 mt-2">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

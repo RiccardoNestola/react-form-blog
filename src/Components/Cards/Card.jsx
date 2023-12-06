@@ -2,12 +2,12 @@ import React from 'react';
 import CardInfo from './CardInfo';
 
 
-const Card = ({ post, onDelete }) => {
+const Card = ({ post, onDelete, onEdit }) => {
 
 
     return (
         <>
-            {post.published && <CardInfo key={post.id} {...post} onDelete={onDelete} />}
+            {post.published && <CardInfo post={post} onDelete={onDelete} onEdit={onEdit} />}
         </>
     )
 }
