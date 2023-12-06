@@ -22,6 +22,11 @@ const Modal = ({ isOpen, onClose, onAddPost }) => {
 
     const Submit = (e) => {
         e.preventDefault();
+
+        if (!newPost.title || !newPost.image || !newPost.content || !newPost.tags) {
+            alert('Riempi tutti i campi!');
+            return;
+        }
         const tagsArray = newPost.tags.split(',').map(tag => tag.trim());
         onAddPost({ ...newPost, tags: tagsArray });
         onClose();
